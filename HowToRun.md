@@ -11,8 +11,9 @@
 - make env files with
 
 ```
-		PORT = 3001
-		SECRET_KEY
+PORT = 3001
+SECRET_KEY = "secret"
+BASE_URL = "http://dev3.dansmultipro.co.id/api/recruitment/positions"
 ```
 
 - run script npm run dbsetup
