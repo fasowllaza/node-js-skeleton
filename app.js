@@ -1,7 +1,6 @@
-const authentication = require('./middlewares/authentication');
+require("dotenv").config();
+
 const errorHandler = require("./middlewares/errorHandler");
-const userController = require('./controllers/userController');
-const recruitmentController = require('./controllers/recruitmentController');
 const express = require('express');
 const cors = require('cors');
 const router = require("./routes/index");
@@ -16,9 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
 	res.status(200).json({ msg: "FINAL PROJECT TPU SERVER" });
 });
+
 app.use(router);
-
-
 app.use(errorHandler);
 
 app.listen(port, () => {
