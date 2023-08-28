@@ -1,25 +1,26 @@
-const authentication = require('./middlewares/authentication')
-const errorHandler = require("./middlewares/errorHandler")
-const userController = require('./controllers/user')
-const recruitmentController = require('./controllers/recruitment')
+const authentication = require('./middlewares/authentication');
+const errorHandler = require("./middlewares/errorHandler");
+const userController = require('./controllers/userController');
+const recruitmentController = require('./controllers/recruitmentController');
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const router = require("./routes/index");
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.post("/register", userController.registerUser)
-app.post("/login", userController.loginUser )
-app.use(authentication)
-app.get('/getJob', recruitmentController.getRecruitment)
-app.get('/getDetail/:id', recruitmentController.getRecruitmentDetail)
+app.get("/", (req, res) => {
+	res.status(200).json({ msg: "FINAL PROJECT TPU SERVER" });
+});
+app.use(router);
 
-app.use(errorHandler)
 
-app.listen(port, ()=>{
-    console.log(`Listening Port ${port}`);
-})
+app.use(errorHandler);
+
+app.listen(port, () => {
+	console.log(`Listening Port ${ port }`);
+});
