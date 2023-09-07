@@ -18,3 +18,10 @@ BASE_URL = "http://dev3.dansmultipro.co.id/api/recruitment/positions"
 
 - run script npm run dbsetup
 - run npm start to run project
+
+## Sequelize
+1. Sequelize init
+2. change config
+3. sequelize model:generate
+4. sequelize migration:generate
+5. sequelize seed:generate
