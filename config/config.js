@@ -1,19 +1,20 @@
-{
-  "development": {
-    "username": "postgres",
-    "password": "password",
+require('dotenv').config()
+module.exports = {
+  development: {
+    "username": process.env.DB_USER,
+    "password": "postgres",
     "database": "dans_multi_database",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
-  "test": {
+  test: {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
+  production: {
     "username": "root",
     "password": null,
     "database": "database_production",

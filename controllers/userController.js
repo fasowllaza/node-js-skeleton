@@ -8,6 +8,7 @@ class Controller{
             username:req.body.username,
             password:req.body.password
         }
+        console.log(req.body)
         userData.password = encode(userData.password)
         User
         .create(userData)

@@ -16,6 +16,13 @@ app.get("/", (req, res) => {
 	res.status(200).json({ msg: "FINAL PROJECT TPU SERVER" });
 });
 
+app.post("/", (req,res) => {
+	console.log(`DEBUG: ${JSON.stringify(req.body)}`)
+	res.status(200).json({
+		msg: JSON.stringify(req.body)
+	})
+})
+
 app.use(router);
 app.use(errorHandler);
 
