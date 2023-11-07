@@ -6,3 +6,4 @@ An Continously updated Node JS skeleton using recent tech using MVC
 - Making axios config
 - make eslint suitable to js ES6
 - making error handler and response
+- Docker and Kubernets
