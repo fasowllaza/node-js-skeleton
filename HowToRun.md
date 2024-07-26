@@ -20,8 +20,11 @@ BASE_URL = "http://dev3.dansmultipro.co.id/api/recruitment/positions"
 - run npm start to run project
 
 ## Sequelize
-1. Sequelize init
-2. change config
-3. sequelize model:generate
-4. sequelize migration:generate
-5. sequelize seed:generate
+
+1. Sequelize init => create config/config.json
+2. Setup dan ubah nama database
+3. npx sequelize-cli db:create
+4. Create model and migration npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+5. Ubah file di migration dan models
+6. npx sequelize-cli db:migrate
+7. generate seed
