@@ -1,38 +1,15 @@
+const { Log } = require("../helpers/logger")
+const { errorResponse } = require("../helpers/response")
+
 function errorHandler(err, req, res, next){
-    switch (err.name){
-        case "Unauthorized":
-            res.status(401).json({message:err.message})
-            break
-        case "Forbidden":
-            res.status(403).json({message:err.message})
-            break
-        case "BadRequest":
-            res.status(400).json({message:err.message})
-            break
-        case "FetchApiFailed":
-            res.status(500).json({message: err.message})
-            break;
-        case "ResourceNotFound":
-            res.status(404).json({message: err.message})
-            break
-        case "ServerError":
-            res.status(500).json({message: err.message})
-            break
-        case "SequelizeValidationError":
-            let error = []
-            err.errors.forEach((el)=>{
-                error.push(el.message)
-            })
-            res.status(400).json({error})
-            break
-        case "SequelizeUniqueConstraintError":
-            res.status(400).json({message:"Email must be unique"})
-            break
-        default:
-            console.log(err);
-            res.status(500).json({message: "Something went wrong"})
-            break 
-    }
+    const {
+        errorCode, errorMessage
+    } = err
+    const apiUrl = req.originalUrl
+    Log('error', apiUrl , [JSON.stringify(err)])
+    return errorResponse(res, errorMessage, errorCode)
 }
+
+
 
 module.exports = errorHandler
