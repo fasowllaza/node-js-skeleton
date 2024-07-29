@@ -6,7 +6,7 @@ function errorHandler(err, req, res, next){
         errorCode, errorMessage
     } = err
     const apiUrl = req.originalUrl
-    Log('error', apiUrl , [JSON.stringify(err)])
+    Log('error', apiUrl , [err])
     return errorResponse(res, errorMessage, errorCode)
 }
 

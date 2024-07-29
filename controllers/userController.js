@@ -1,6 +1,9 @@
 const {User} = require("../models")
 const {decode, encode} = require("../helpers/bcrypt")
 const {sign} = require("../helpers/jwt")
+const { successResponse, errorResponse } = require("../helpers/response")
+const errorMapping = require("../helpers/errorMapping")
+const { DATABASE_ERRORS, USER_ERRORS } = require("../constant/error")
 
 class Controller{
     static registerUser(req, res, next) {
@@ -12,18 +15,10 @@ class Controller{
         User
         .create(userData)
         .then((data)=>{
-            res.status(201).json({
-                name:data.name,
-                msg:"Account Created"
-            })
+            successResponse(req, res)
         })
         .catch((err)=>{
-            if(err.name==="ServerError"){
-                next({name: "ServerError", message:err.message})
-            }
-            else{
-                next({name: "SequelizeValidationError", err})
-            }
+            errorMapping(next, DATABASE_ERRORS[err.name], err)
         })
     }
     static loginUser(req, res, next){
@@ -43,20 +38,19 @@ class Controller{
                     let payload = {
                         username: data.username
                     }
-
                     const access_token = sign(payload)
-                    res.status(200).json({access_token})
+                    successResponse({access_token})
                 }
                 else{
-                    next({name:"BadRequest", message:"Invalid username/password"})
+                    errorMapping(next, USER_ERRORS['USER-002'])
                 }
             }
             else{
-                next({name:"BadRequest", message:"Invalid username/password"})
+                errorMapping(next, USER_ERRORS['USER-002'])
             }
         })
-        .catch((err)=>{
-            next({name: "ServerError", message:err.message})
+        .catch((error)=>{
+            next(error)
         })
     }
 }

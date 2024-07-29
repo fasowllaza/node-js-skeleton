@@ -1,6 +1,7 @@
 const log = require('npmlog')
 
 function Log (level, prefix = '', message = []) {
+    console.log(message)
     const logMessage = JSON.stringify(message)
     const route = `api: ${prefix}`
     switch (level) {
