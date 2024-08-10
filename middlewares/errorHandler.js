@@ -20,7 +20,7 @@ function errorHandler(err, req, res, next){
             break
         case "SequelizeValidationError":
             let error = []
-            err.errors.forEach((el)=>{
+            err.err.errors.forEach((el)=>{
                 error.push(el.message)
             })
             res.status(400).json({error})

@@ -1,14 +1,15 @@
 const { verify } = require('../helpers/jwt');
 
 async function authentication(req, res, next) {
-	if (!req.headers.access_token) {
+	if (!req.headers.authorization) {
 		next({ name: "Unauthorized", message: "Login First" });
 	}
 	else {
-		let decoded = verify(req.headers.access_token);
+		const access_token = req.headers.authorization.split(' ')[1]
+		const { id, role } = verify(access_token);
 		req.user = {
-			id: decoded.id,
-			username: decoded.username
+			id,
+			role
 		};
 		next();
 	}

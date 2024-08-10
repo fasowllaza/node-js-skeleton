@@ -1,58 +1,29 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Borrows extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // Define association with Users
-      Borrows.belongsTo(models.Users, {
-        foreignKey: 'UserId',
-        as: 'user'
-      });
+const { Model, DataTypes } = require('sequelize');
 
-      // Define association with Books
-      Borrows.belongsTo(models.Books, {
-        foreignKey: 'BookId',
-        as: 'book'
-      });
+module.exports = (sequelize) => {
+  class Borrows extends Model {
+    static associate(models) {
+      Borrows.belongsTo(models.Users, { foreignKey: 'UserId' });
+      Borrows.belongsTo(models.Books, { foreignKey: 'BookId' });
     }
   }
+  
   Borrows.init({
     BorrowsId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true, // Enable auto-increment
-      primaryKey: true // Set as the primary key
+      primaryKey: true,
+      autoIncrement: true
     },
-    BookId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    startBorrow: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    endBorrow: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: true
-    }
+    BookId: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER,
+    startBorrow: DataTypes.DATE,
+    endBorrow: DataTypes.DATE,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Borrows',
   });
+  
   return Borrows;
 };

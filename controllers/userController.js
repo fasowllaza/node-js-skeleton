@@ -1,15 +1,28 @@
-const {User} = require("../models")
+const {Users} = require("../models")
 const {decode, encode} = require("../helpers/bcrypt")
 const {sign} = require("../helpers/jwt")
+const { emailValidation, passwordValidation } = require("../helpers/validation")
 
 class Controller{
     static registerUser(req, res, next) {
-        let userData = {
-            username:req.body.username,
-            password:req.body.password
+        const {
+            email,
+            password,
+            role
+        } = req.body
+        if (!emailValidation(email)) {
+            next({name:"BadRequest", message:"Email Invalid"})
         }
-        userData.password = encode(userData.password)
-        User
+        if (!passwordValidation(password)) {
+            next({name:"BadRequest", message:"The password must be composed of 8 alphanumeric characters and must contain at least one uppercase letter. It cannot contain special characters."})
+        }
+        let userData = {    
+            email,
+            password,
+            role
+        }
+        userData.password = encode(password)
+        Users
         .create(userData)
         .then((data)=>{
             res.status(201).json({
@@ -26,24 +39,23 @@ class Controller{
             }
         })
     }
-    static loginUser(req, res, next){
-        let userData = {
-            username:req.body.username,
-            password:req.body.password,
-        }
-        User
+    static loginUser(req, res, next) {
+        const {
+            email,
+            password
+        } = req.body
+        Users
         .findOne({
             where:{
-                username: userData.username
+                email
             }
         })
         .then((data)=>{
             if(data){
-                if(decode(userData.password,data.password)){
+                if(decode(password,data.password)){
                     let payload = {
-                        username: data.username
+                        role: data.role
                     }
-
                     const access_token = sign(payload)
                     res.status(200).json({access_token})
                 }
