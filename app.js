@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-	res.status(200).json({ msg: "FINAL PROJECT TPU SERVER" });
+	res.status(200).json({ msg: "GEFAMI" });
 });
 
 app.use(router);
