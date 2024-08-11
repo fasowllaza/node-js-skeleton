@@ -1,5 +1,6 @@
 ## How To RUn
 
+USE NODE 14.17.3
 1. git clone
 2. npm i
 3. Setup dan ubah config database di config.js
@@ -8,3 +9,4 @@
 6. npx sequelize-cli db:seed:all
 7. npm run dev to run dev server
 8. no need .env
+9. import postman collection in folder collection
